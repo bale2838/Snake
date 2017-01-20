@@ -83,7 +83,6 @@ public class Board  extends JPanel implements ActionListener {
 	}
 	
 	private void resetGame() {
-		System.out.println("RESET");
 		dots = 3;
 		
 		for (int z = 0; z < dots; z++) {
@@ -155,7 +154,7 @@ public class Board  extends JPanel implements ActionListener {
 		
 		g.setColor(Color.white);
 		g.setFont(small);
-		g.drawString(title, (B_WIDTH - metr.stringWidth(title)) / 2, B_HEIGHT / 2);
+		g.drawString(title, (B_WIDTH - metr.stringWidth(title)) / 2, (B_HEIGHT / 2));
 		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 2) + 20);
 	}
 
@@ -168,7 +167,7 @@ public class Board  extends JPanel implements ActionListener {
 
 		g.setColor(Color.white);
 		g.setFont(small);
-		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, (B_HEIGHT / 2));
 		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 2) + 20);
 		
 		timer.stop();
@@ -185,8 +184,8 @@ public class Board  extends JPanel implements ActionListener {
 
 	private void move() {
 		for (int z = dots; z > 0; z--) {
-			x[z] = x[(z - 1)];
-			y[z] = y[(z - 1)];
+			x[z] = x[z - 1];
+			y[z] = y[z - 1];
 
 		}
 
