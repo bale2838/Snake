@@ -20,8 +20,8 @@ public class Snake extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {		
-				JFrame ex = new Snake();
-				ex.setVisible(true);
+				JFrame snake = new Snake();
+				snake.setVisible(true);
 			}
 		});
 	}
