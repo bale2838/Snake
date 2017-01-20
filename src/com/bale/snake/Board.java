@@ -81,6 +81,24 @@ public class Board  extends JPanel implements ActionListener {
 		timer  = new Timer(DELAY, this);
 		timer.start();
 	}
+	
+	private void resetGame() {
+		System.out.println("RESET");
+		dots = 3;
+		
+		for (int z = 0; z < dots; z++) {
+			x[z] = 50 - (z * 10);
+			y[z] = 50;
+		}
+		
+		inGame = true; 
+		isStarted = false;
+		
+		spawnApple();
+		
+		timer = new Timer(DELAY, this);
+		timer.start();
+	}
 
 	private void spawnApple() {
 		int r = (int)(Math.random() * RAND_POS);
@@ -130,7 +148,7 @@ public class Board  extends JPanel implements ActionListener {
 	
 	private void titleMenu(Graphics g) {
 		String title = "Snake";
-		String instruct = "Press Enter to Start";
+		String instruct = "Press [ENTER] to Start";
 		
 		Font small = new Font("Helvetica", Font.BOLD, 14);
 		FontMetrics metr = getFontMetrics(small);
@@ -143,12 +161,17 @@ public class Board  extends JPanel implements ActionListener {
 
 	private void gameOver(Graphics g) {
 		String msg = "Game Over";
+		String instruct = "Press [ESC] to Restart";
+		
 		Font small = new Font("Helvetica", Font.BOLD, 14);
 		FontMetrics metr = getFontMetrics(small);
 
 		g.setColor(Color.white);
 		g.setFont(small);
 		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 2) + 20);
+		
+		timer.stop();
 	}
 
 	private void checkApple() {
@@ -247,6 +270,10 @@ public class Board  extends JPanel implements ActionListener {
 			if (key == KeyEvent.VK_ENTER) {
 				Sound.eat.play();
 				isStarted = true;
+			}
+			
+			if (key == KeyEvent.VK_ESCAPE) {
+				resetGame();
 			}
 		}
 
