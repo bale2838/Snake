@@ -13,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -46,8 +47,13 @@ public class Board  extends JPanel implements ActionListener {
 	private Image ball;
 	private Image apple;
 	private Image head;
+	private JLabel statusbar;
+	private int score;
+	public Snake parent;
 
-	public Board() {
+	public Board(Snake parent) {
+		this.parent = parent;
+		statusbar = parent.getStatusBar();
 		addKeyListener(new TAdapter());
 		setBackground(Color.black);
 		setFocusable(true);
@@ -68,6 +74,7 @@ public class Board  extends JPanel implements ActionListener {
 	}
 
 	private void initGame() {
+		score = 0;
 		// snake begins with three bits
 		dots = 3;
 
@@ -82,7 +89,9 @@ public class Board  extends JPanel implements ActionListener {
 		timer.start();
 	}
 	
-	private void resetGame() {
+	private void resetGame(Snake parent) {
+		score = 0;
+		statusbar.setText(String.valueOf(score));
 		dots = 3;
 		
 		for (int z = 0; z < dots; z++) {
@@ -130,6 +139,8 @@ public class Board  extends JPanel implements ActionListener {
 		}
 		
 		if (inGame) {
+			statusbar.setText(String.valueOf(score));
+			
 			g.drawImage(apple, apple_x, apple_y, this);
 
 			for (int z = 0; z < dots; z++) {
@@ -178,6 +189,7 @@ public class Board  extends JPanel implements ActionListener {
 		if ((x[0] == apple_x) && (y[0] == apple_y)) {
 			Sound.eat.play();
 			dots++;
+			score++;
 			spawnApple();
 		}
 	}
@@ -231,6 +243,7 @@ public class Board  extends JPanel implements ActionListener {
 		}
 
 		if (!inGame) {
+			Sound.death.play();
 			timer.stop();
 		}
 	}
@@ -272,7 +285,7 @@ public class Board  extends JPanel implements ActionListener {
 			}
 			
 			if (key == KeyEvent.VK_ESCAPE) {
-				resetGame();
+				resetGame(parent);
 			}
 		}
 
