@@ -183,6 +183,7 @@ public class Board  extends JPanel implements ActionListener {
 		String wrolliCred = "Game Designer - Wrolli";
 		String instruct = "Press [ESC] to Restart";
 		String playerCmd = "Please give us feedback! <3";
+		String itchIoLink = "http://sti.itch.io/snibbles";
 
 		Font small = new Font("Helvetica", Font.BOLD, 14);
 		FontMetrics metr = getFontMetrics(small);
@@ -195,6 +196,7 @@ public class Board  extends JPanel implements ActionListener {
 		g.drawString(wrolliCred, (B_WIDTH - metr.stringWidth(wrolliCred)) / 2, (B_HEIGHT / 6) + 60);
 		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 6) + 80);
 		g.drawString(playerCmd, (B_WIDTH - metr.stringWidth(playerCmd)) / 2, (B_HEIGHT / 6) + 160);
+		g.drawString(itchIoLink, (B_WIDTH - metr.stringWidth(itchIoLink)) / 2, (B_HEIGHT / 6) + 180);
 
 		timer.stop();
 	}
