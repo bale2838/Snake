@@ -84,28 +84,33 @@ public class Board  extends JPanel implements ActionListener {
 		}
 
 		spawnApple();
-		
+
 		timer  = new Timer(DELAY, this);
 		timer.start();
 	}
-	
+
 	private void resetGame(Snake parent) {
-		score = 0;
-		statusbar.setText(String.valueOf(score));
-		dots = 3;
-		
-		for (int z = 0; z < dots; z++) {
-			x[z] = 50 - (z * 10);
-			y[z] = 50;
+		if (!inGame) {
+			score = 0;
+			statusbar.setText(String.valueOf(score));
+			dots = 3;
+
+			for (int z = 0; z < dots; z++) {
+				x[z] = 50 - (z * 10);
+				y[z] = 50;
+			}
+
+			inGame = true; 
+			isStarted = false;
+
+			spawnApple();
+			rightDirection = true;
+			leftDirection = false;
+			upDirection = false;
+			downDirection = false;
+			timer = new Timer(DELAY, this);
+			timer.start();
 		}
-		
-		inGame = true; 
-		isStarted = false;
-		
-		spawnApple();
-		
-		timer = new Timer(DELAY, this);
-		timer.start();
 	}
 
 	private void spawnApple() {
@@ -137,10 +142,10 @@ public class Board  extends JPanel implements ActionListener {
 			titleMenu(g);
 			return;
 		}
-		
+
 		if (inGame) {
 			statusbar.setText(String.valueOf(score));
-			
+
 			g.drawImage(apple, apple_x, apple_y, this);
 
 			for (int z = 0; z < dots; z++) {
@@ -155,32 +160,42 @@ public class Board  extends JPanel implements ActionListener {
 			gameOver(g);
 		}
 	}
-	
+
 	private void titleMenu(Graphics g) {
-		String title = "Snake";
+		String title = "~Snibbles~";
+		String author = "By: sti & Wrolli";
 		String instruct = "Press [ENTER] to Start";
-		
+
 		Font small = new Font("Helvetica", Font.BOLD, 14);
 		FontMetrics metr = getFontMetrics(small);
-		
+
 		g.setColor(Color.white);
 		g.setFont(small);
-		g.drawString(title, (B_WIDTH - metr.stringWidth(title)) / 2, (B_HEIGHT / 2));
-		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 2) + 20);
+		g.drawString(title, (B_WIDTH - metr.stringWidth(title)) / 2, (B_HEIGHT / 3));
+		g.drawString(author, (B_WIDTH - metr.stringWidth(author)) / 2, (B_HEIGHT / 3 + 20));
+		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 3) + 50);
 	}
 
 	private void gameOver(Graphics g) {
-		String msg = "Game Over";
+		String msg = "GAME OVER";
+		String cred = "Credits:";
+		String stiCred = "Programmer - sti";
+		String wrolliCred = "Game Designer - Wrolli";
 		String instruct = "Press [ESC] to Restart";
-		
+		String playerCmd = "Please give us feedback! <3";
+
 		Font small = new Font("Helvetica", Font.BOLD, 14);
 		FontMetrics metr = getFontMetrics(small);
 
 		g.setColor(Color.white);
 		g.setFont(small);
-		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, (B_HEIGHT / 2));
-		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 2) + 20);
-		
+		g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, (B_HEIGHT / 6));
+		g.drawString(cred, (B_WIDTH - metr.stringWidth(cred)) / 2, (B_HEIGHT / 6) + 20);
+		g.drawString(stiCred, (B_WIDTH - metr.stringWidth(stiCred)) / 2, (B_HEIGHT / 6) + 40);
+		g.drawString(wrolliCred, (B_WIDTH - metr.stringWidth(wrolliCred)) / 2, (B_HEIGHT / 6) + 60);
+		g.drawString(instruct, (B_WIDTH - metr.stringWidth(instruct)) / 2, (B_HEIGHT / 6) + 80);
+		g.drawString(playerCmd, (B_WIDTH - metr.stringWidth(playerCmd)) / 2, (B_HEIGHT / 6) + 160);
+
 		timer.stop();
 	}
 
@@ -283,7 +298,7 @@ public class Board  extends JPanel implements ActionListener {
 				Sound.eat.play();
 				isStarted = true;
 			}
-			
+
 			if (key == KeyEvent.VK_ESCAPE) {
 				resetGame(parent);
 			}
